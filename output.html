@@ -1,0 +1,31 @@
+<html><body style='color:#000000; background:#ffffff; '><pre>
+
+<span style='color:#004a43; '>#</span><span style='color:#004a43; '>include </span><span style='color:#800000; '>&lt;</span><span style='color:#40015a; '>studio.h</span><span style='color:#800000; '>></span>
+
+<span style='color:#800000; font-weight:bold; '>int</span> <span style='color:#400000; '>main</span><span style='color:#808030; '>(</span><span style='color:#800000; font-weight:bold; '>void</span><span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+   <span style='color:#800000; font-weight:bold; '>int</span> userAge<span style='color:#800080; '>;</span>
+   <span style='color:#800000; font-weight:bold; '>int</span> insurancePrice<span style='color:#800080; '>;</span>
+
+   <span style='color:#603000; '>printf</span><span style='color:#808030; '>(</span><span style='color:#800000; '>"</span><span style='color:#0000e6; '>Enter your age: </span><span style='color:#800000; '>"</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+   <span style='color:#603000; '>scanf</span><span style='color:#808030; '>(</span><span style='color:#800000; '>"</span><span style='color:#0f69ff; '>%d</span><span style='color:#800000; '>"</span><span style='color:#808030; '>,</span> <span style='color:#808030; '>&amp;</span>userAge<span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+
+   <span style='color:#800000; font-weight:bold; '>if</span> <span style='color:#808030; '>(</span>userAge <span style='color:#808030; '>&lt;</span> <span style='color:#008c00; '>16</span><span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>             <span style='color:#696969; '>// Age 15 and under</span>
+      <span style='color:#603000; '>printf</span><span style='color:#808030; '>(</span><span style='color:#800000; '>"</span><span style='color:#0000e6; '>Too young.</span><span style='color:#0f69ff; '>\n</span><span style='color:#800000; '>"</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      insurancePrice <span style='color:#808030; '>=</span> <span style='color:#008c00; '>0</span><span style='color:#800080; '>;</span>
+   <span style='color:#800080; '>}</span>
+   <span style='color:#800000; font-weight:bold; '>else</span> <span style='color:#800000; font-weight:bold; '>if</span> <span style='color:#808030; '>(</span>userAge <span style='color:#808030; '>&lt;</span> <span style='color:#008c00; '>25</span><span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>        <span style='color:#696969; '>// Age 16 - 24</span>
+      insurancePrice <span style='color:#808030; '>=</span> <span style='color:#008c00; '>4800</span><span style='color:#800080; '>;</span>
+   <span style='color:#800080; '>}</span>
+   <span style='color:#800000; font-weight:bold; '>else</span> <span style='color:#800000; font-weight:bold; '>if</span> <span style='color:#808030; '>(</span>userAge <span style='color:#808030; '>&lt;</span> <span style='color:#008c00; '>40</span><span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>        <span style='color:#696969; '>// Age 25 - 39</span>
+      insurancePrice <span style='color:#808030; '>=</span> <span style='color:#008c00; '>2350</span><span style='color:#800080; '>;</span>
+   <span style='color:#800080; '>}</span>
+   <span style='color:#800000; font-weight:bold; '>else</span> <span style='color:#800080; '>{</span>                          <span style='color:#696969; '>// Age 40 and up</span>
+      insurancePrice <span style='color:#808030; '>=</span> <span style='color:#008c00; '>2100</span><span style='color:#800080; '>;</span>
+   <span style='color:#800080; '>}</span>
+
+   <span style='color:#603000; '>printf</span><span style='color:#808030; '>(</span><span style='color:#800000; '>"</span><span style='color:#0000e6; '>Annual price: $</span><span style='color:#0f69ff; '>%d</span><span style='color:#0f69ff; '>\n</span><span style='color:#800000; '>"</span><span style='color:#808030; '>,</span> insurancePrice<span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+   <span style='color:#800000; font-weight:bold; '>return</span> <span style='color:#008c00; '>0</span><span style='color:#800080; '>;</span>
+<span style='color:#800080; '>}</span>
+
+
+</pre></body></html>
