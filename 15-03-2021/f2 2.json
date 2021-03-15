@@ -1,0 +1,122 @@
+{
+    "html": [
+        {
+            "text": "\n<p><i>Simple fracture</i> is the separation of a body into two or more pieces in response to an imposed stress that is static (i.e., constant or slowly changing with time) and at temperatures that are low relative to the melting temperature of the material. Fracture can also occur from fatigue (when cyclic stresses are imposed) and creep (time-dependent deformation, normally at elevated temperatures); the topics of fatigue and creep are covered later in this chapter  (Sections ",
+            "attributes": [
+                {
+                    "type": "html"
+                }
+            ]
+        },
+        {
+            "text": "",
+            "guid": "d9e7ca09-ac5b-4e1b-8c74-df387ce23839",
+            "reference": "f32a86c5-2954-4c83-bf04-65abd9555233",
+            "attributes": [
+                {
+                    "type": "reference"
+                }
+            ]
+        },
+        {
+            "text": " through ",
+            "attributes": [
+                {
+                    "type": "html"
+                }
+            ]
+        },
+        {
+            "text": "",
+            "guid": "3e129422-7b1b-476e-a294-5cd9127d475e",
+            "reference": "b328d5cb-82b2-4db4-8941-b41253971fe1",
+            "attributes": [
+                {
+                    "type": "reference"
+                }
+            ]
+        },
+        {
+            "text": "). Although applied stresses may be tensile, compressive, shear, or torsional (or combinations of these), the present discussion will be confined to fractures that result from uniaxial tensile loads. For metals, two fracture modes are possible: <span class=\"term\" obeycase=\"false\">ductile</span> and <span class=\"term\" obeycase=\"false\">brittle</span>. Classification is based on the ability of a material to experience plastic deformation. Ductile metals typically exhibit substantial plastic deformation with high energy absorption before fracture. However, there is normally little or no plastic deformation with low energy absorption accompanying a brittle fracture. The tensile stress-strain behaviors of both fracture types may be reviewed in Figure ",
+            "attributes": [
+                {
+                    "type": "html"
+                }
+            ]
+        },
+        {
+            "text": "",
+            "guid": "96008a47-f853-4b06-97df-6aab7fa0d43f",
+            "reference": "8c981a6b-4f80-443f-9cfd-4838de34e26f",
+            "attributes": [
+                {
+                    "type": "reference"
+                }
+            ]
+        },
+        {
+            "text": ".</p>\n<p>VMSE iframe links row 101 Tensile Tests</p>\n<h3>VMSE: Tensile Tests</h3>\n<p>Select one of the listed materials at left to begin. Click \"Add\" next to another material to add it to the existing graph.</p>\n<p>In this module, you can generate stress-strain curves for the following five metal alloys and four polymers; simultaneous animations show specimen profiles. You can also compare the tensile behavior of two or more of these materials by superimposing their stress-strain curves on the same graph. Titanium, tempered steel, aluminum, and carbon steel experience ductile fracture. Cast iron experiences brittle fracture.</p>\n<p>\n<ul>\n<li>\n<a href=\"https://wileyassets.s3.amazonaws.com/VMSE/json/applets/tensileTests/tensileTests.html\" rel=\"noopener noreferrer\">VMSE: Tensile Tests</a>\n</li></ul>\n</p>\n\n<p><i>Ductile</i> and <i>brittle</i> are relative terms; whether a particular fracture is one mode or the other depends on the situation. Ductility may be quantified in terms of percent elongation (Equation ",
+            "attributes": [
+                {
+                    "type": "html"
+                }
+            ]
+        },
+        {
+            "text": "",
+            "guid": "8e0a7508-8210-49fc-963d-0126870fb1ac",
+            "reference": "0e1bc79e-678d-44b9-898f-78e60d110a23",
+            "attributes": [
+                {
+                    "type": "reference"
+                }
+            ]
+        },
+        {
+            "text": ") and percent reduction in area (Equation ",
+            "attributes": [
+                {
+                    "type": "html"
+                }
+            ]
+        },
+        {
+            "text": "",
+            "guid": "9da84d45-ae8f-4441-9178-1c9e48ef66d3",
+            "reference": "5e051d2d-a6a5-4456-976f-ae0bec88da32",
+            "attributes": [
+                {
+                    "type": "reference"
+                }
+            ]
+        },
+        {
+            "text": "). Furthermore, ductility is a function of temperature of the material, the strain rate, and the stress state. The disposition of normally ductile materials to fail in a brittle manner is discussed in Section ",
+            "attributes": [
+                {
+                    "type": "html"
+                }
+            ]
+        },
+        {
+            "text": "",
+            "guid": "72475224-d855-4497-b511-666e8aeef983",
+            "reference": "f287d5cb-020a-460d-ac74-d43904d2e279",
+            "attributes": [
+                {
+                    "type": "reference"
+                }
+            ]
+        },
+        {
+            "text": ".</p>\n<p>Any fracture process involves two steps-crack formation and propagation-in response to an imposed stress. The mode of fracture is highly dependent on the mechanism of crack propagation. Ductile fracture is characterized by extensive plastic deformation in the vicinity of an advancing crack. The process proceeds relatively slowly as the crack length is extended. Such a crack is often said to be <i>stable</i>-that is, it resists any further extension unless there is an increase in the applied stress. In addition, there typically is evidence of appreciable gross deformation at the fracture surfaces (e.g., twisting and tearing). However, for brittle fracture, cracks may spread extremely rapidly, with very little accompanying plastic deformation. Such cracks may be said to be <i>unstable</i>, and crack propagation, once started, continues spontaneously without an increase in magnitude of the applied stress.</p>\n<p>Ductile fracture is almost always preferred to brittle fracture for two reasons: First, brittle fracture occurs suddenly and catastrophically without any warning; this is a consequence of the spontaneous and rapid crack propagation. By contrast, in ductile fracture, the presence of plastic deformation gives warning that failure is imminent, allowing preventive measures to be taken. Second, more strain energy is required to induce ductile fracture inasmuch as these materials are generally tougher. Under the action of an applied tensile stress, many metal alloys are ductile, whereas ceramics are typically brittle, and polymers may exhibit a range of behaviors.</p>\n",
+            "attributes": [
+                {
+                    "type": "html"
+                }
+            ]
+        }
+    ],
+    "ref": "423a7cd2-9b4f-483b-ab35-1b9299dd878a",
+    "name": "html"
+}
