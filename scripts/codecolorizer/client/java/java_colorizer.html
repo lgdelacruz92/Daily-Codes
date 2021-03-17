@@ -1,0 +1,57 @@
+<html><body style='color:#000000; background:#ffffff; '><pre>
+
+<span style='color:#800000; font-weight:bold; '>class</span> Stack <span style='color:#800080; '>{</span>
+   <span style='color:#800000; font-weight:bold; '>private</span> LinkedList linkedList<span style='color:#800080; '>;</span>
+    
+   <span style='color:#bb7977; font-weight:bold; '>Stack</span><span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+      linkedList <span style='color:#808030; '>=</span> <span style='color:#800000; font-weight:bold; '>new</span> LinkedList<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+   <span style='color:#800080; '>}</span>
+   
+   <span style='color:#800000; font-weight:bold; '>public</span> <span style='color:#bb7977; '>void</span> push<span style='color:#808030; '>(</span><span style='color:#bb7977; '>int</span> newData<span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+      <span style='color:#696969; '>// Create a new node and prepend</span>
+      Node newNode <span style='color:#808030; '>=</span> <span style='color:#800000; font-weight:bold; '>new</span> Node<span style='color:#808030; '>(</span>newData<span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      linkedList<span style='color:#808030; '>.</span>prepend<span style='color:#808030; '>(</span>newNode<span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+   <span style='color:#800080; '>}</span>
+   
+   <span style='color:#800000; font-weight:bold; '>public</span> <span style='color:#bb7977; '>int</span> pop<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+      <span style='color:#696969; '>// Copy list head's data</span>
+      <span style='color:#bb7977; '>int</span> poppedItem <span style='color:#808030; '>=</span> linkedList<span style='color:#808030; '>.</span>getHeadData<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      
+      <span style='color:#696969; '>// Remove list head</span>
+      linkedList<span style='color:#808030; '>.</span>removeAfter<span style='color:#808030; '>(</span><span style='color:#800000; font-weight:bold; '>null</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      
+      <span style='color:#696969; '>// Return popped item</span>
+      <span style='color:#800000; font-weight:bold; '>return</span> poppedItem<span style='color:#800080; '>;</span>
+   <span style='color:#800080; '>}</span>
+   
+   <span style='color:#800000; font-weight:bold; '>public</span> <span style='color:#bb7977; '>void</span> print<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+      linkedList<span style='color:#808030; '>.</span>printList<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+   <span style='color:#800080; '>}</span>
+<span style='color:#800080; '>}</span>
+
+<span style='color:#800000; font-weight:bold; '>public</span> <span style='color:#800000; font-weight:bold; '>class</span> StackDemo <span style='color:#800080; '>{</span>
+   <span style='color:#800000; font-weight:bold; '>public</span> <span style='color:#800000; font-weight:bold; '>static</span> <span style='color:#bb7977; '>void</span> main<span style='color:#808030; '>(</span><span style='color:#bb7977; font-weight:bold; '>String</span><span style='color:#808030; '>[</span><span style='color:#808030; '>]</span> args<span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+      <span style='color:#bb7977; '>int</span><span style='color:#808030; '>[</span><span style='color:#808030; '>]</span> numbers <span style='color:#808030; '>=</span> <span style='color:#800080; '>{</span> <span style='color:#008c00; '>91</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>66</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>9</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>46</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>23</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>65</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>6</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>77</span> <span style='color:#800080; '>}</span><span style='color:#800080; '>;</span>
+      
+      <span style='color:#696969; '>// Initialize a new Stack and add numbers</span>
+      <span style='color:#bb7977; font-weight:bold; '>Stack</span> numStack <span style='color:#808030; '>=</span> <span style='color:#800000; font-weight:bold; '>new</span> <span style='color:#bb7977; font-weight:bold; '>Stack</span><span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      <span style='color:#800000; font-weight:bold; '>for</span> <span style='color:#808030; '>(</span><span style='color:#bb7977; '>int</span> number <span style='color:#808030; '>:</span> numbers<span style='color:#808030; '>)</span> <span style='color:#800080; '>{</span>
+          numStack<span style='color:#808030; '>.</span>push<span style='color:#808030; '>(</span>number<span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      <span style='color:#800080; '>}</span>
+
+      <span style='color:#696969; '>// Output stack</span>
+      <span style='color:#bb7977; font-weight:bold; '>System</span><span style='color:#808030; '>.</span>out<span style='color:#808030; '>.</span>print<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"Stack after push: "</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      numStack<span style='color:#808030; '>.</span>print<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      
+      <span style='color:#696969; '>// Pop 77 and print</span>
+      numStack<span style='color:#808030; '>.</span>pop<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      <span style='color:#bb7977; font-weight:bold; '>System</span><span style='color:#808030; '>.</span>out<span style='color:#808030; '>.</span>print<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"Stack after first pop: "</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      numStack<span style='color:#808030; '>.</span>print<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      
+      <span style='color:#696969; '>// Pop 6 and print</span>
+      numStack<span style='color:#808030; '>.</span>pop<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      <span style='color:#bb7977; font-weight:bold; '>System</span><span style='color:#808030; '>.</span>out<span style='color:#808030; '>.</span>print<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"Stack after second pop: "</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+      numStack<span style='color:#808030; '>.</span>print<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+   <span style='color:#800080; '>}</span>
+<span style='color:#800080; '>}</span>
+</pre></body></html>

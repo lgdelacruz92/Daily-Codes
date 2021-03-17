@@ -1,9 +1,10 @@
 from pygments import highlight
-from pygments.lexers import  get_lexer_by_name
+from pygments.lexers.jvm import JavaLexer
+from pygments.token import STANDARD_TYPES, Keyword
 from pygments.formatters import HtmlFormatter
 import sys
 
 with open(sys.argv[2], 'r') as test_file:
     code = test_file.read()
-    lexer = get_lexer_by_name(sys.argv[1], stripall=True)
+    lexer = JavaLexer()
     print(highlight(code, lexer, HtmlFormatter()))
