@@ -165,40 +165,33 @@
         <div style="height: 50px"></div>
     <div>
         <div class="highlight"><pre id="pygments">
-<span></span><span class="cp">#include</span> <span class="cpf">&lt;studio.h&gt;</span><span class="cp"></span>
+            
+            <span></span>
+            <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">userAge</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">insurancePrice</span><span class="p">;</span>
-
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Enter your age: &quot;</span><span class="p">);</span>
-    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">userAge</span><span class="p">);</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">userAge</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">)</span>
-    <span class="p">{</span> <span class="c1">// Age 15 and under</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Too young.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-        <span class="n">insurancePrice</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">userAge</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">)</span>
-    <span class="p">{</span> <span class="c1">// Age 16 - 24</span>
-        <span class="n">insurancePrice</span> <span class="o">=</span> <span class="mi">4800</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">userAge</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">)</span>
-    <span class="p">{</span> <span class="c1">// Age 25 - 39</span>
-        <span class="n">insurancePrice</span> <span class="o">=</span> <span class="mi">2350</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">else</span>
-    <span class="p">{</span> <span class="c1">// Age 40 and up</span>
-        <span class="n">insurancePrice</span> <span class="o">=</span> <span class="mi">2100</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Annual price: $%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">insurancePrice</span><span class="p">);</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+            <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+               <span class="k">const</span> <span class="kt">int</span> <span class="n">YEARS_PER_GEN</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">// Approx. years per generation</span>
+               <span class="kt">int</span> <span class="n">userYear</span><span class="p">;</span>                 <span class="c1">// User input</span>
+               <span class="kt">int</span> <span class="n">consYear</span><span class="p">;</span>                 <span class="c1">// Year being considered</span>
+               <span class="kt">int</span> <span class="n">numAnc</span><span class="p">;</span>                   <span class="c1">// Approx. ancestors in considered year</span>
+               
+               <span class="n">consYear</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">;</span>
+               <span class="n">numAnc</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+            
+               <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Enter a past year (neg. for B.C.): &quot;</span><span class="p">);</span>
+               <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">userYear</span><span class="p">);</span>
+               
+               <span class="k">while</span> <span class="p">(</span><span class="n">consYear</span> <span class="o">&gt;=</span> <span class="n">userYear</span><span class="p">)</span> <span class="p">{</span>
+                  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Ancestors in %d: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">consYear</span><span class="p">,</span> <span class="n">numAnc</span><span class="p">);</span>
+                  
+                  <span class="n">numAnc</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">numAnc</span><span class="p">;</span>                 <span class="c1">// Each ancestor had two parents</span>
+                  <span class="n">consYear</span> <span class="o">=</span> <span class="n">consYear</span> <span class="o">-</span> <span class="n">YEARS_PER_GEN</span><span class="p">;</span> <span class="c1">// Go back 1 generation</span>
+               <span class="p">}</span>
+               
+               <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">}</span>
             </pre></div>
             
-    </div>
     <script src="index.js"></script>
 </body>
 </html>

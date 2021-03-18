@@ -1,0 +1,29 @@
+<html><body style='color:#000000; background:#ffffff; '><pre>
+
+<span style='color:#696969; '># First code block has no indentation</span>
+
+model <span style='color:#808030; '>=</span> <span style='color:#e34adc; '>input</span><span style='color:#808030; '>(</span><span style='color:#0000e6; '>'Enter car model: '</span><span style='color:#808030; '>)</span>
+year <span style='color:#808030; '>=</span> <span style='color:#e34adc; '>int</span><span style='color:#808030; '>(</span><span style='color:#e34adc; '>input</span><span style='color:#808030; '>(</span><span style='color:#0000e6; '>'Enter year of car manufacture: '</span><span style='color:#808030; '>)</span><span style='color:#808030; '>)</span>
+
+antique <span style='color:#808030; '>=</span> <span style='color:#e34adc; '>False</span>
+domestic <span style='color:#808030; '>=</span> <span style='color:#e34adc; '>False</span>
+
+<span style='color:#800000; font-weight:bold; '>if</span> year <span style='color:#808030; '>&lt;</span> <span style='color:#008c00; '>1970</span><span style='color:#808030; '>:</span>
+    <span style='color:#696969; '># New code block has indentation of 4 columns</span>
+    antique <span style='color:#808030; '>=</span> <span style='color:#e34adc; '>True</span>
+
+<span style='color:#696969; '># Back to code block 0</span>
+
+<span style='color:#800000; font-weight:bold; '>if</span> model <span style='color:#800000; font-weight:bold; '>in</span> <span style='color:#808030; '>[</span><span style='color:#0000e6; '>'Ford'</span><span style='color:#808030; '>,</span> <span style='color:#0000e6; '>'Chevrolet'</span><span style='color:#808030; '>,</span> <span style='color:#0000e6; '>'Dodge'</span><span style='color:#808030; '>]</span><span style='color:#808030; '>:</span>
+  <span style='color:#696969; '># New code block has indentation of 2 columns</span>
+  <span style='color:#696969; '># Any amount of indentation > 0 is OK.</span>
+  domestic <span style='color:#808030; '>=</span> <span style='color:#e34adc; '>True</span>
+
+<span style='color:#696969; '># Back to code block 0</span>
+
+<span style='color:#800000; font-weight:bold; '>if</span> antique<span style='color:#808030; '>:</span>
+    <span style='color:#696969; '># New code block has indentation of 4 columns</span>
+    <span style='color:#800000; font-weight:bold; '>if</span> domestic<span style='color:#808030; '>:</span>
+        <span style='color:#696969; '># New block has 4 additional columns (8 total)</span>
+        <span style='color:#800000; font-weight:bold; '>print</span><span style='color:#808030; '>(</span><span style='color:#0000e6; '>'My own model-T still runs like a charm...'</span><span style='color:#808030; '>)</span>
+</pre></body></html>
