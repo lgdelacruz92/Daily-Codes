@@ -108,7 +108,7 @@
     color: #0000e6;
 }
 .highlight .kc { 
-    color: #800000;
+    color: #e34adc;
 }
 .highlight .cp {
     color: #004a43;
@@ -120,4 +120,13 @@
 .highlight .nc {
     color: black;
     font-weight: normal;
+}
+.highlight .nb {
+    color: #e34adc;
+}
+.highlight .s1 {
+    color: #0000e6;
+}
+.highlight .ow {
+    color: #800000;
 }
