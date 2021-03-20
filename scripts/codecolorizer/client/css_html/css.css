@@ -1,0 +1,12 @@
+#container {
+    border: solid 2px green;   
+    /* No positioning */ 
+    height: 60px;
+    width: 150px;
+}	
+#cheer {
+    color: red;
+    position: absolute;
+    left: 10px;
+    top: 25px;
+}

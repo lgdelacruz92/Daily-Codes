@@ -1,0 +1,18 @@
+
+<div class=\"code\"><pre><span style=\"color:#808030; \">#</span>container <span style=\"color:#800080; \">{</span>
+  <span style=\"color:#bb7977; font-weight:bold; \">border</span><span style=\"color:#808030; \">:</span> <span style=\"color:#074726; \">solid</span> <span style=\"color:#008c00; \">2</span><span style=\"color:#006600; \">px</span> <span style=\"color:#901a80; \">green</span><span style=\"color:#800080; \">;</span>   
+  <span style=\"color:#696969; \">/* No positioning */</span> 
+  <span style=\"color:#bb7977; font-weight:bold; \">height</span><span style=\"color:#808030; \">:</span> <span style=\"color:#008c00; \">60</span><span style=\"color:#006600; \">px</span><span style=\"color:#800080; \">;</span>
+  <span style=\"color:#bb7977; font-weight:bold; \">width</span><span style=\"color:#808030; \">:</span> <span style=\"color:#008c00; \">150</span><span style=\"color:#006600; \">px</span><span style=\"color:#800080; \">;</span>
+<span style=\"color:#800080; \">}</span>        
+<span style=\"color:#808030; \">#</span>cheer <span style=\"color:#800080; \">{</span>
+  <span style=\"color:#bb7977; font-weight:bold; \">color</span><span style=\"color:#808030; \">:</span> <span style=\"color:#901a80; \">red</span><span style=\"color:#800080; \">;</span>
+  <span style=\"color:#bb7977; font-weight:bold; \">position</span><span style=\"color:#808030; \">:</span> <span style=\"color:#074726; \">absolute</span><span style=\"color:#800080; \">;</span>
+  <span style=\"color:#bb7977; font-weight:bold; \">left</span><span style=\"color:#808030; \">:</span> <span style=\"color:#008c00; \">10</span><span style=\"color:#006600; \">px</span><span style=\"color:#800080; \">;</span>
+  <span style=\"color:#bb7977; font-weight:bold; \">top</span><span style=\"color:#808030; \">:</span> <span style=\"color:#008c00; \">25</span><span style=\"color:#006600; \">px</span><span style=\"color:#800080; \">;</span>
+<span style=\"color:#800080; \">}</span>
+</pre></div>
+<div class=\"code\"><pre><span style=\"color:#a65700; \">&lt;</span><span style=\"color:#800000; font-weight:bold; \">div</span><span style=\"color:#274796; \"> </span><span style=\"color:#074726; \">id</span><span style=\"color:#808030; \">=</span><span style=\"color:#0000e6; \">\"container\"</span><span style=\"color:#a65700; \">&gt;</span>
+  <span style=\"color:#a65700; \">&lt;</span><span style=\"color:#800000; font-weight:bold; \">div</span><span style=\"color:#274796; \"> </span><span style=\"color:#074726; \">id</span><span style=\"color:#808030; \">=</span><span style=\"color:#0000e6; \">\"cheer\"</span><span style=\"color:#a65700; \">&gt;</span>Go, fight, win!<span style=\"color:#a65700; \">&lt;/</span><span style=\"color:#800000; font-weight:bold; \">div</span><span style=\"color:#a65700; \">&gt;</span>
+<span style=\"color:#a65700; \">&lt;/</span><span style=\"color:#800000; font-weight:bold; \">div</span><span style=\"color:#a65700; \">&gt;</span>
+</pre></div>

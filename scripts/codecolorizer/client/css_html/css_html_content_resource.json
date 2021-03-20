@@ -1,0 +1,14 @@
+{
+    "html": [
+        {
+            "text": "\n<div class=\"highlight code\"><pre><span></span><span class=\"p\">#</span><span class=\"nn\">container</span> <span class=\"p\">{</span>\n    <span class=\"k\">border</span><span class=\"p\">:</span> <span class=\"kc\">solid</span> <span class=\"mi\">2</span><span class=\"kt\">px</span> <span class=\"kc\">green</span><span class=\"p\">;</span>   \n    <span class=\"c\">/* No positioning */</span> \n    <span class=\"k\">height</span><span class=\"p\">:</span> <span class=\"mi\">60</span><span class=\"kt\">px</span><span class=\"p\">;</span>\n    <span class=\"k\">width</span><span class=\"p\">:</span> <span class=\"mi\">150</span><span class=\"kt\">px</span><span class=\"p\">;</span>\n<span class=\"p\">}</span>\t\n<span class=\"p\">#</span><span class=\"nn\">cheer</span> <span class=\"p\">{</span>\n    <span class=\"k\">color</span><span class=\"p\">:</span> <span class=\"kc\">red</span><span class=\"p\">;</span>\n    <span class=\"k\">position</span><span class=\"p\">:</span> <span class=\"kc\">absolute</span><span class=\"p\">;</span>\n    <span class=\"k\">left</span><span class=\"p\">:</span> <span class=\"mi\">10</span><span class=\"kt\">px</span><span class=\"p\">;</span>\n    <span class=\"k\">top</span><span class=\"p\">:</span> <span class=\"mi\">25</span><span class=\"kt\">px</span><span class=\"p\">;</span>\n<span class=\"p\">}</span>\n</pre></div>\n<div class=\"highlight code\"><pre><span></span><span class=\"o\">&lt;</span><span class=\"nt\">div</span> <span class=\"nt\">id</span><span class=\"o\">=</span><span class=\"s2\">&quot;container&quot;</span><span class=\"o\">&gt;</span>\n    <span class=\"o\">&lt;</span><span class=\"nt\">div</span> <span class=\"nt\">id</span><span class=\"o\">=</span><span class=\"s2\">&quot;cheer&quot;</span><span class=\"o\">&gt;</span><span class=\"nt\">Go</span><span class=\"o\">,</span> <span class=\"nt\">fight</span><span class=\"o\">,</span> <span class=\"nt\">win</span><span class=\"o\">!&lt;/</span><span class=\"nt\">div</span><span class=\"o\">&gt;</span>\n<span class=\"o\">&lt;/</span><span class=\"nt\">div</span><span class=\"o\">&gt;</span>\n</pre></div>\n\n",
+            "attributes": [
+                {
+                    "type": "html"
+                }
+            ]
+        }
+    ],
+    "ref": "",
+    "name": "Figure"
+}
