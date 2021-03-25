@@ -9,6 +9,32 @@
       html {
         scroll-behavior: smooth;
       }
+
+            // Main pages
+      #loading-view-clone {
+          width: 100%;
+      }
+      #main-page-clone {
+          position: relative;
+          height: 100%;
+      }
+
+
+      // Sub pages
+      #find-and-replace-clone, #file-select-clone, #find-page-clone {
+          width: 100%;
+          background: white;
+          position: absolute;
+          top: 0;
+          transition: left 0.3s ease-in;
+          height: 100%;
+      }
+
+      #file-select-clone {
+          left: 0px;
+      }
+
+      // General css
       #file-item #preview {
           color: #888;
       }
@@ -29,16 +55,6 @@
           animation: .5s fadeIn;
           animation-fill-mode: forwards;
           visibility: visible;
-      }
-      #loading-view-clone {
-          width: 100%;
-          position: absolute;
-      }
-      #main-page-clone {
-          position: absolute;
-          height: 100%;
-          overflow-x: scroll;
-          white-space: nowrap;
       }
 
       img {
@@ -65,17 +81,9 @@
           left: 0;
         }
       }
-      #find-and-replace {
-          width: 300px;
-          background: white;
-          display: inline-block;
-          vertical-align: top;
-      }
-      #file-select {
-          width: 300px;
-          background: white;
-          display: inline-block;
-          vertical-align: top;
+
+      .pop {
+          left: 100%;
       }
       .push {
           left: 0;
@@ -88,7 +96,7 @@
       .input-group-text {
           border-radius: .25rem 0 0 .25rem !important;
       }
-      #find-and-replace-inputs {
+      #find-and-replace-inputs, #find-inputs {
           padding: 10px;
       }
       #find-and-replace-button {
@@ -122,25 +130,43 @@
           </div>
         </nav>
       </div>
-      <div id="find-and-replace">
+      <div id="find-and-replace" class="pop">
         <nav class="navbar navbar-light bg-light">
           <div class="container-fluid">
             <form class="d-flex">
-              <button class="btn btn-outline-success" type="submit" id="back-button">Back</button>
+              <button class="btn btn-outline-success" type="submit" id="find-and-replace-back-button">Back</button>
             </form>
             <form class="d-flex">
-              <button class="btn btn-outline-success" type="submit" id="submit-button">submit</button>
+              <button class="btn btn-outline-success" type="submit" id="find-and-replace-submit-button">submit</button>
             </form>
           </div>
         </nav>
         <div id="find-and-replace-inputs">
           <div class="input-group input-group-sm mb-3">
             <span class="input-group-text">Find</span>
-            <textarea class="form-control" aria-label="Find" id="search-pattern"></textarea>
+            <textarea class="form-control" aria-label="Find" id="find-and-replace-search-pattern"></textarea>
           </div>
           <div class="input-group input-group-sm mb3">
             <span class="input-group-text">Replace</span>
-            <textarea class="form-control" aria-label="Replace" id="replacement"></textarea>
+            <textarea class="form-control" aria-label="Replace" id="find-and-replace-replacement"></textarea>
+          </div>
+        </div>
+      </div>
+      <div id="find-page" class="pop">
+        <nav class="navbar navbar-light bg-light">
+          <div class="container-fluid">
+            <form class="d-flex">
+              <button class="btn btn-outline-success" type="submit" id="find-back-button">Back</button>
+            </form>
+            <form class="d-flex">
+              <button class="btn btn-outline-success" type="submit" id="find-submit-button">submit</button>
+            </form>
+          </div>
+        </nav>
+        <div id="find-inputs">
+          <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text">Find</span>
+            <textarea class="form-control" aria-label="Find" id="find-search-pattern"></textarea>
           </div>
         </div>
       </div>
@@ -250,11 +276,6 @@
           var fileSelect = document.getElementById('file-select');
           var fileSelectClone = fileSelect.cloneNode(true);
           mainPage.appendChild(fileSelectClone);
-
-          // Add find and replace
-          var findAndReplace = document.getElementById('find-and-replace');
-          var findAndReplaceClone = findAndReplace.cloneNode(true);
-          mainPage.appendChild(findAndReplaceClone);
           
           for (let i = 0; i < files.length; i++) {
               var fileItemDiv = document.getElementById('file-item');
@@ -266,28 +287,28 @@
           }
       }
 
-      // Pushes find and replace to side bar
-      function pushFindAndReplacePage() {
-          var mainPageClone = document.getElementById('main-page-clone')
-          var findAndReplace = mainPageClone.querySelector('#find-and-replace');
-          findAndReplace.scrollIntoView(true);
-      }
-
       // Next Action click
-      function onNextActionClick() {
-          pushFindAndReplacePage();
-      }
-
-      // Pops find and replace
-      function popFindAndReplacePage() {
-          var mainPageClone = document.getElementById('main-page-clone');
-          var findAndReplace = mainPageClone.querySelector('#file-select');
-          findAndReplace.scrollIntoView(true);
+      function onFindButtonAction() {
+          var findPageClone = document.getElementById('find-page-clone');
+          findPageClone.classList.add('push');
       }
 
       // Back Action click
       function onBackActionClick() {
-          popFindAndReplacePage();
+          var findPageClone = document.getElementById('find-page-clone');
+          findPageClone.classList.remove('push');
+      }
+
+      // Find and Replace Button Action
+      function onFindAndReplaceAction() {
+          var findAndReplaceClone = document.getElementById('find-and-replace-clone');
+          findAndReplaceClone.classList.add('push');
+      }
+
+      // Find And Replace Button Back
+      function onFindAndReplaceBackAction() {
+          var findAndReplaceClone = document.getElementById('find-and-replace-clone');
+          findAndReplaceClone.classList.remove('push');
       }
 
       // The finish page
@@ -330,23 +351,53 @@
       }
 
       /**
-       * Initialize actions
+       * Initialize main page actions
        */
-      function initActions() {
+      function initMainPageActions() {
           
           var mainPageClone = document.getElementById('main-page-clone');
           
-          // Next Button
-          var nextButton = mainPageClone.querySelector('#find-button');
-          nextButton.addEventListener('click', onNextActionClick);
+          // Find Button
+          var findButton = mainPageClone.querySelector('#find-button');
+          findButton.addEventListener('click', onFindButtonAction);
 
-          // Back Button
-          var backButton = mainPageClone.querySelector('#back-button');
+          // Find and Replace Button
+          var findAndReplaceButton = mainPageClone.querySelector('#find-and-replace-button');
+          findAndReplaceButton.addEventListener('click', onFindAndReplaceAction);
+      }
+
+      // Initialize main page
+      function initMainPage(files) {
+          // Show lists of documents
+          showFileItems(files);
+
+          // initialize actions
+          initMainPageActions();
+      }
+
+      // Initialize find page
+      function initFindPage() {
+
+          // Make clone
+          var findPage = document.getElementById('find-page');
+          var findPageClone = findPage.cloneNode(true);
+          findPageClone.setAttribute('id', 'find-page-clone');
+
+          // Add back button
+          var backButton = findPageClone.querySelector('#find-back-button');
           backButton.addEventListener('click', onBackActionClick);
 
-          // Next 2 Button
-          var submitButton = mainPageClone.querySelector('#submit-button');
-          submitButton.addEventListener('click', onSubmitActionClick);
+          document.body.appendChild(findPageClone);
+      }
+
+      // Initialize find and replace page
+      function initFindAndReplacePage() {
+          // Make clone
+          var findAndReplace = document.getElementById('find-and-replace');
+          var findAndReplaceClone = findAndReplace.cloneNode(true);
+          fincAndReplaceClone.setAttribute('id', 'find-and-replace-clone');
+
+          document.body.appendChild(findAndReplaceClone);
       }
 
       // Start of script
@@ -364,11 +415,14 @@
                   // Toggle list
                   loader.toggle(null);
 
-                  // Show lists of documents
-                  showFileItems(files);
-
                   // actions
-                  initActions();
+                  initMainPage(files);
+
+                  // initialize find page
+                  initFindPage();
+
+                  // initialize find and replace page
+                  initFindAndReplace();
               })
               .withFailureHandler(function (msg) {
                   // Show error here
