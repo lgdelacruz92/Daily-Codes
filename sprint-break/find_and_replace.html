@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      #file-item #preview {
+          color: #888;
+      }
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+      .hide {
+          visibility: hidden;
+          opacity: 1;
+      }
+      .show {
+          animation: .5s fadeIn;
+          animation-fill-mode: forwards;
+          visibility: visible;
+      }
+      #loading-view-clone {
+          width: 100%;
+          position: absolute;
+      }
+      #main-page-clone {
+          position: absolute;
+          height: 100%;
+          overflow-x: scroll;
+          white-space: nowrap;
+      }
+
+      img {
+          max-width: 100%;
+          max-height: 100%;
+      }
+      .title {
+          font-size: 24px;
+          font-weight: bold;
+          margin: 5px;
+      }
+      body {
+          font-family: 'Roboto', sans-serif;
+      }
+      #file-item .name {
+          margin-left: 3px;
+      }
+      @keyframes move-in {
+        0% {
+          left: 200px;
+        }
+        100% {
+          visibility: visible;
+          left: 0;
+        }
+      }
+      #find-and-replace {
+          width: 300px;
+          background: white;
+          display: inline-block;
+          vertical-align: top;
+      }
+      #file-select {
+          width: 300px;
+          background: white;
+          display: inline-block;
+          vertical-align: top;
+      }
+      .push {
+          left: 0;
+      }
+      .input-group-text, .form-control {
+          font-size: 12px !important;
+          padding: 5px !important;
+          height: 30px !important;
+      }
+      .input-group-text {
+          border-radius: .25rem 0 0 .25rem !important;
+      }
+      #find-and-replace-inputs {
+          padding: 10px;
+      }
+      #find-and-replace-button {
+          margin-left: 10px;
+      }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <body>
+    <div style="display: none">
+      <div id="loading-view">
+        <h3 class="title">Loading...</h3>
+        <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/afb8cb36197347.5713616457ee5.gif" alt="spinner-gif"/>
+      </div>
+      <div id="main-page">
+      </div>
+      <div id="finish-page">
+            <h3 class="title">Finished</h3>
+        </div>
+      <div id="file-item" class="list-group-item list-group-item-action">
+        <div id="name">Chapter 1</div>
+      </div>
+      <div id="file-select">
+        <nav class="navbar navbar-light bg-light">
+          <div class="container-fluid">
+            <a class="navbar-brand">Files to Include</a>
+            <form class="d-flex">
+              <button class="btn btn-outline-success" type="submit" id="find-button">Find</button>
+              <button class="btn btn-outline-success" type="submit" id="find-and-replace-button">Find And Replace</button>
+            </form>
+          </div>
+        </nav>
+      </div>
+      <div id="find-and-replace">
+        <nav class="navbar navbar-light bg-light">
+          <div class="container-fluid">
+            <form class="d-flex">
+              <button class="btn btn-outline-success" type="submit" id="back-button">Back</button>
+            </form>
+            <form class="d-flex">
+              <button class="btn btn-outline-success" type="submit" id="submit-button">submit</button>
+            </form>
+          </div>
+        </nav>
+        <div id="find-and-replace-inputs">
+          <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text">Find</span>
+            <textarea class="form-control" aria-label="Find" id="search-pattern"></textarea>
+          </div>
+          <div class="input-group input-group-sm mb3">
+            <span class="input-group-text">Replace</span>
+            <textarea class="form-control" aria-label="Replace" id="replacement"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // global vars
+      var fileManager;
+      var loader;
+
+      // Controls the loading screen
+      function initLoader () {
+          this.isLoading = false;
+
+          // Method to toggle view on and off
+          this.toggle = function(title) {
+              var loadingView = document.getElementById('loading-view');
+              var mainPage = document.getElementById('main-page');
+              if (this.isLoading == false) {
+                  var loadingViewClone = loadingView.cloneNode(true);
+                  loadingViewClone.setAttribute('id', 'loading-view-clone');
+                  
+                  // set title
+                  var loadingTitle = loadingViewClone.querySelector('.title');
+                  loadingTitle.innerText = title;
+
+                  // add to body
+                  document.body.appendChild(loadingViewClone);
+
+                  // set var
+                  this.isLoading = true;
+
+                  // Clean main page
+                  var mainPageClone = document.getElementById('main-page-clone');
+                  if (mainPageClone) {
+                      document.body.removeChild(mainPageClone);
+                  }
+              } else {
+                  var mainPageClone = mainPage.cloneNode(true);
+                  mainPageClone.setAttribute('id', 'main-page-clone');
+
+                  // add to body
+                  document.body.appendChild(mainPageClone);
+
+                  // set var
+                  this.isLoading = false;
+
+                  // clean loading-view
+                  var loadingViewClone = document.getElementById('loading-view-clone');
+                  if (loadingViewClone) {
+                      document.body.removeChild(loadingViewClone)
+                  }
+              }
+          }
+
+          return this;
+      }
+
+      // Control file states
+      function initFiles() {
+          this.files = [];
+
+          this.addFile = function(file) {
+              if (file && file.length > 0) {
+                this.files.push(file);
+              }
+          }
+
+          this.removeFile = function(file) {
+              if (file && file.length > 0) {
+                var index = this.files.indexOf(file);
+                this.files.splice(index, 1);
+              }
+          }
+
+          this.fileExists = function(file) {
+              if (!file) return false;
+              return this.files.indexOf(file) != -1;
+          }
+
+          this.getFiles = function() {
+              return this.files;
+          }
+
+          return this;
+      }
+
+      // Event handler for file click
+      function onFileItemClick(e) {
+          var gdocId = e.target.parentElement.getAttribute('file-id');
+          
+          if (fileManager.fileExists(gdocId)) {
+              e.target.parentElement.classList.remove('active');
+              fileManager.removeFile(gdocId);
+          } else {
+              e.target.parentElement.classList.add('active');
+              fileManager.addFile(gdocId);
+          }
+      }
+
+      /**
+       * Method that shows the list of files
+       */
+      function showFileItems(files) {
+          var mainPage = document.getElementById('main-page-clone');
+
+          // Add file select
+          var fileSelect = document.getElementById('file-select');
+          var fileSelectClone = fileSelect.cloneNode(true);
+          mainPage.appendChild(fileSelectClone);
+
+          // Add find and replace
+          var findAndReplace = document.getElementById('find-and-replace');
+          var findAndReplaceClone = findAndReplace.cloneNode(true);
+          mainPage.appendChild(findAndReplaceClone);
+          
+          for (let i = 0; i < files.length; i++) {
+              var fileItemDiv = document.getElementById('file-item');
+              var fileItemClone = fileItemDiv.cloneNode(true);
+              fileItemClone.querySelector('#name').innerText = files[i].name;
+              fileItemClone.setAttribute('file-id', files[i].id);
+              fileItemClone.addEventListener('click', onFileItemClick);
+              fileSelectClone.appendChild(fileItemClone);
+          }
+      }
+
+      // Pushes find and replace to side bar
+      function pushFindAndReplacePage() {
+          var mainPageClone = document.getElementById('main-page-clone')
+          var findAndReplace = mainPageClone.querySelector('#find-and-replace');
+          findAndReplace.scrollIntoView(true);
+      }
+
+      // Next Action click
+      function onNextActionClick() {
+          pushFindAndReplacePage();
+      }
+
+      // Pops find and replace
+      function popFindAndReplacePage() {
+          var mainPageClone = document.getElementById('main-page-clone');
+          var findAndReplace = mainPageClone.querySelector('#file-select');
+          findAndReplace.scrollIntoView(true);
+      }
+
+      // Back Action click
+      function onBackActionClick() {
+          popFindAndReplacePage();
+      }
+
+      // The finish page
+      function showFinishPage() {
+          var loadingViewClone = document.getElementById('loading-view-clone');
+          document.body.removeChild(loadingViewClone);
+
+          var finishPage = document.getElementById('finish-page');
+          var finishPageClone = finishPage.cloneNode(true);
+          document.body.appendChild(finishPageClone);
+      }
+
+      // Submit action click
+      function onSubmitActionClick() {
+
+          // Show splash screen
+
+          // Get searchPattern
+          var mainPageClone = document.getElementById('main-page-clone');
+          var searchPatternTextArea = mainPageClone.querySelector('#search-pattern');
+          var searchPattern = searchPatternTextArea.value;
+
+          // Get replacement
+          var replacementTextArea = mainPageClone.querySelector('#replacement');
+          var replacement = replacementTextArea.value;
+
+          loader.toggle('Submitting...');
+
+          // call file list
+          google.script.run
+              .withSuccessHandler(function (files) {
+                  // Show finish page
+                  showFinishPage();
+              })
+              .withFailureHandler(function (msg) {
+                  // Show error here
+
+              })
+              .replaceText(fileManager.getFiles(), searchPattern, replacement);
+      }
+
+      /**
+       * Initialize actions
+       */
+      function initActions() {
+          
+          var mainPageClone = document.getElementById('main-page-clone');
+          
+          // Next Button
+          var nextButton = mainPageClone.querySelector('#find-button');
+          nextButton.addEventListener('click', onNextActionClick);
+
+          // Back Button
+          var backButton = mainPageClone.querySelector('#back-button');
+          backButton.addEventListener('click', onBackActionClick);
+
+          // Next 2 Button
+          var submitButton = mainPageClone.querySelector('#submit-button');
+          submitButton.addEventListener('click', onSubmitActionClick);
+      }
+
+      // Start of script
+      window.onload = function() {
+          // File states
+          fileManager = initFiles();
+
+          // loader view
+          loader = initLoader();
+          loader.toggle('Loading...');
+
+          // call file list
+          google.script.run
+              .withSuccessHandler(function (files) {
+                  // Toggle list
+                  loader.toggle(null);
+
+                  // Show lists of documents
+                  showFileItems(files);
+
+                  // actions
+                  initActions();
+              })
+              .withFailureHandler(function (msg) {
+                  // Show error here
+
+              })
+              .getFiles();
+      }
+    </script>
+  </body>
+</html>
+
+
