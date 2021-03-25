@@ -395,7 +395,11 @@
           // Make clone
           var findAndReplace = document.getElementById('find-and-replace');
           var findAndReplaceClone = findAndReplace.cloneNode(true);
-          fincAndReplaceClone.setAttribute('id', 'find-and-replace-clone');
+          findAndReplaceClone.setAttribute('id', 'find-and-replace-clone');
+
+          // back button
+          var findAndReplaceBackButton = findAndReplaceClone.querySelector('#find-and-replace-back-button');
+          findAndReplaceBackButton.addEventListener('click', onFindAndReplaceBackAction);
 
           document.body.appendChild(findAndReplaceClone);
       }
@@ -422,7 +426,7 @@
                   initFindPage();
 
                   // initialize find and replace page
-                  initFindAndReplace();
+                  initFindAndReplacePage();
               })
               .withFailureHandler(function (msg) {
                   // Show error here
