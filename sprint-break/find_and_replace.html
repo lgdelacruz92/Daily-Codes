@@ -392,13 +392,25 @@
       function showFindResults(findResults) {
           var keys = Object.keys(findResults);
           var count = 1;
+          var elements = []
           for (var i = 0; i < keys.length; i++) {
               var results = findResults[keys[i]].results;
               for (var j = 0; j < results.length; j++) {
                   var findResultElement = makeFindResultElement(results[j], count, findResults[keys[i]].name, findResults[keys[i]].url);
                   count+=1
-                  document.body.appendChild(findResultElement);
+                  elements.push(findResultElement);
               }
+          }
+
+          elements.sort(function(a, b) {
+              var a_value = a.querySelector('#name').innerText;
+              var b_value = b.querySelector('#name').innerText;
+
+              return a_value.localeCompare(b_value);
+          });
+
+          for (var i = 0; i < elements.length; i++) {
+              document.body.appendChild(elements[i]);
           }
           
           // Remove loading
