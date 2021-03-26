@@ -5,7 +5,30 @@ function onOpen() {
       .addToUi();
 }
 
+/**
+ * Finds all instances
+ */
+function findAll(files, searchPattern) {
+    var result = {};
+    for (var i = 0; i < files.length; i++) {
+        var document = DocumentApp.openById(files[i]);
+        result[files[i]] = {};
+        result[files[i]]['url'] = document.getUrl();
+        result[files[i]]['results'] = [];
+        result[files[i]]['name'] = document.getName();
+        var nextRange = document.getBody().findText(searchPattern);
+        while (nextRange !== null) {
+          var elementText = nextRange.getElement().asText().getText();
+          result[files[i]]['results'].push(elementText);
+          nextRange = document.getBody().findText(searchPattern, nextRange);
+        }
+    }
+    return result;
+}
 
+/*
+  Gets the files
+*/
 function getFiles() {
     var driveFile = DriveApp.getFileById(DocumentApp.getActiveDocument().getId());
     var parentFoldersIttr = driveFile.getParents();

@@ -19,7 +19,6 @@
           height: 100%;
       }
 
-
       // Sub pages
       #find-and-replace-clone, #file-select-clone, #find-page-clone {
           width: 100%;
@@ -28,10 +27,12 @@
           top: 0;
           transition: left 0.3s ease-in;
           height: 100%;
+          z-index: 3;
       }
 
       #file-select-clone {
           left: 0px;
+          z-index: 0;
       }
 
       // General css
@@ -102,10 +103,15 @@
       #find-and-replace-button {
           margin-left: 10px;
       }
+      .preview {
+          color: #666;
+          font-size: 12px;
+      }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <body>
+      
     <div style="display: none">
       <div id="loading-view">
         <h3 class="title">Loading...</h3>
@@ -118,6 +124,13 @@
         </div>
       <div id="file-item" class="list-group-item list-group-item-action">
         <div id="name">Chapter 1</div>
+      </div>
+      <div id="find-result" class="list-group-item list-group-item-action">
+        <div id="name"></div>
+        <div class="preview"></div>
+      </div>
+      <div id="error-page">
+        <span>Oops! Something went wrong. Please contact dev.</span>
       </div>
       <div id="file-select">
         <nav class="navbar navbar-light bg-light">
@@ -137,7 +150,7 @@
               <button class="btn btn-outline-success" type="submit" id="find-and-replace-back-button">Back</button>
             </form>
             <form class="d-flex">
-              <button class="btn btn-outline-success" type="submit" id="find-and-replace-submit-button">submit</button>
+              <button class="btn btn-outline-success" type="submit" id="find-and-replace-submit-button">Submit</button>
             </form>
           </div>
         </nav>
@@ -276,7 +289,13 @@
           var fileSelect = document.getElementById('file-select');
           var fileSelectClone = fileSelect.cloneNode(true);
           mainPage.appendChild(fileSelectClone);
-          
+
+          // Sort files first
+          files.sort(function(a,b) {
+            return a.name.localeCompare(b.name);
+          });
+
+          // List files
           for (let i = 0; i < files.length; i++) {
               var fileItemDiv = document.getElementById('file-item');
               var fileItemClone = fileItemDiv.cloneNode(true);
@@ -311,31 +330,35 @@
           findAndReplaceClone.classList.remove('push');
       }
 
-      // The finish page
-      function showFinishPage() {
-          var loadingViewClone = document.getElementById('loading-view-clone');
-          document.body.removeChild(loadingViewClone);
-
-          var finishPage = document.getElementById('finish-page');
-          var finishPageClone = finishPage.cloneNode(true);
-          document.body.appendChild(finishPageClone);
+      // Remove find page
+      function removeFindPage() {
+          var findPageClone = document.getElementById('find-page-clone');
+          document.body.removeChild(findPageClone);
       }
 
-      // Submit action click
-      function onSubmitActionClick() {
+      // Remove find and replace page
+      function removeFindAndReplacePage() {
+          var findAndReplaceClone = document.getElementById('find-and-replace-clone');
+          document.body.removeChild(findAndReplaceClone);
+      }
 
-          // Show splash screen
+      // Find and replace submit action
+      function onFindAndReplaceSubmitAction() {
+          var findAndReplaceClone = document.getElementById('find-and-replace-clone');
 
-          // Get searchPattern
-          var mainPageClone = document.getElementById('main-page-clone');
-          var searchPatternTextArea = mainPageClone.querySelector('#search-pattern');
-          var searchPattern = searchPatternTextArea.value;
+          // search pattern value
+          var searchPatternElement = findAndReplaceClone.querySelector('#find-and-replace-search-pattern');
+          var searchPattern = searchPatternElement.value;
 
-          // Get replacement
-          var replacementTextArea = mainPageClone.querySelector('#replacement');
-          var replacement = replacementTextArea.value;
+          // replacement value
+          var replacementElement = findAndReplaceClone.querySelector('#find-and-replace-replacement');
+          var replacement = replacementElement.value;
 
-          loader.toggle('Submitting...');
+          loader.toggle('Sumitting...');
+          
+          // remove other pages
+          removeFindPage();
+          removeFindAndReplacePage();
 
           // call file list
           google.script.run
@@ -345,9 +368,91 @@
               })
               .withFailureHandler(function (msg) {
                   // Show error here
-
+                  showErrorPage();
               })
               .replaceText(fileManager.getFiles(), searchPattern, replacement);
+      }
+
+      // Makes find result element
+      function makeFindResultElement(strResult, count, name, url) {
+          var findResultElement = document.getElementById('find-result');
+          var findResultElementClone = findResultElement.cloneNode(true);
+          findResultElementClone.setAttribute('id', 'find-result-'+ count);
+
+          findResultElementClone.querySelector('#name').innerText = name;
+          findResultElementClone.querySelector('.preview').innerText = strResult;
+
+          findResultElementClone.addEventListener('click', function() {
+              window.open(url);
+          });
+          return findResultElementClone;
+      }
+
+      // Shows find results
+      function showFindResults(findResults) {
+          var keys = Object.keys(findResults);
+          var count = 1;
+          for (var i = 0; i < keys.length; i++) {
+              var results = findResults[keys[i]].results;
+              for (var j = 0; j < results.length; j++) {
+                  var findResultElement = makeFindResultElement(results[j], count, findResults[keys[i]].name, findResults[keys[i]].url);
+                  count+=1
+                  document.body.appendChild(findResultElement);
+              }
+          }
+          
+          // Remove loading
+          var loadingViewClone = document.getElementById('loading-view-clone');
+          document.body.removeChild(loadingViewClone);
+
+      }
+
+      // Find submit action
+      function onFindSubmitActionClick() {
+          var findAndReplaceClone = document.getElementById('find-page-clone');
+
+          // search pattern value
+          var searchPatternElement = findAndReplaceClone.querySelector('#find-search-pattern');
+          console.log(searchPatternElement)
+          var searchPattern = searchPatternElement.value;
+          loader.toggle('Sumitting...');
+          
+          // remove other pages
+          removeFindPage();
+          removeFindAndReplacePage();
+
+          // call file list
+          google.script.run
+              .withSuccessHandler(function (findResults) {
+                  // Show finish page
+                  showFindResults(findResults);
+              })
+              .withFailureHandler(function (msg) {
+                  // Show error here
+                  showErrorPage();
+              })
+              .findAll(fileManager.getFiles(), searchPattern);
+      }
+
+      function showErrorPage() {
+          var errorPage = document.getElementById('error-page');
+          var errorPageClone = errorPage.cloneNode(true);
+
+          // Remove loading
+          var loadingViewClone = document.getElementById('loading-view-clone');
+          document.body.removeChild(loadingViewClone);
+          
+          document.body.appendChild(errorPageClone);
+      }
+
+      // The finish page
+      function showFinishPage() {
+          var loadingViewClone = document.getElementById('loading-view-clone');
+          document.body.removeChild(loadingViewClone);
+
+          var finishPage = document.getElementById('finish-page');
+          var finishPageClone = finishPage.cloneNode(true);
+          document.body.appendChild(finishPageClone);
       }
 
       /**
@@ -387,6 +492,10 @@
           var backButton = findPageClone.querySelector('#find-back-button');
           backButton.addEventListener('click', onBackActionClick);
 
+          // Add submit button
+          var submitButton = findPageClone.querySelector('#find-submit-button');
+          submitButton.addEventListener('click', onFindSubmitActionClick);
+
           document.body.appendChild(findPageClone);
       }
 
@@ -400,6 +509,10 @@
           // back button
           var findAndReplaceBackButton = findAndReplaceClone.querySelector('#find-and-replace-back-button');
           findAndReplaceBackButton.addEventListener('click', onFindAndReplaceBackAction);
+
+          // Submit button
+          var findAndReplaceSubmitButton = findAndReplaceClone.querySelector('#find-and-replace-submit-button');
+          findAndReplaceSubmitButton.addEventListener('click', onFindAndReplaceSubmitAction);
 
           document.body.appendChild(findAndReplaceClone);
       }
@@ -430,7 +543,7 @@
               })
               .withFailureHandler(function (msg) {
                   // Show error here
-
+                  showErrorPage();
               })
               .getFiles();
       }
