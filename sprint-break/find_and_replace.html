@@ -100,19 +100,28 @@
       #find-and-replace-inputs, #find-inputs {
           padding: 10px;
       }
-      #find-and-replace-button {
-          margin-left: 10px;
-      }
       .preview {
           color: #666;
           font-size: 12px;
       }
+      svg:hover {
+          fill: green;
+      }
+      .disabled {
+        pointer-events: none;
+        background: #bbb !important;
+      }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <body>
       
     <div style="display: none">
+      <div id="empty-search">
+        No search pattern found
+      </div>
       <div id="loading-view">
         <h3 class="title">Loading...</h3>
         <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/afb8cb36197347.5713616457ee5.gif" alt="spinner-gif"/>
@@ -125,9 +134,28 @@
       <div id="file-item" class="list-group-item list-group-item-action">
         <div id="name">Chapter 1</div>
       </div>
-      <div id="find-result" class="list-group-item list-group-item-action">
-        <div id="name"></div>
-        <div class="preview"></div>
+      <div id="file-results">
+        <nav class="navbar navbar-light bg-light">
+          <div class="container-fluid">
+            <form class="d-flex">
+              <button class="btn btn-outline-success" type="submit" id="replace-all-button">Replace All</button>
+            </form>
+          </div>
+        </nav>
+      </div>
+      <div id="find-result" class="list-group-item list-group-item-action" style="display: flex">
+        <div style="flex:3">
+          <div id="name"></div>
+          <div class="preview"></div>
+        </div>
+        <div style="flex:1; display: flex; justify-content: space-around; align-items: center">
+            <span id="replace-find-button" data-toggle="tooltip" data-placement="top" title="replace">
+              <svg id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="15" viewBox="0, 0, 400,400"><g id="svgg"><path id="path0" d="M189.388 0.271 C 90.394 7.207,12.968 79.981,1.862 176.531 C 1.500 179.673,0.924 183.301,0.581 184.592 C -0.045 186.949,0.124 193.803,0.820 194.286 C 0.982 194.398,1.530 195.308,2.037 196.308 C 8.241 208.543,25.771 208.632,32.129 196.462 C 32.780 195.216,33.544 194.287,33.918 194.287 C 34.466 194.286,34.617 193.479,34.853 189.286 C 37.294 146.007,58.377 103.494,91.633 74.790 C 158.523 17.056,257.153 21.502,318.612 85.022 L 324.613 91.224 300.368 91.429 C 276.342 91.631,276.102 91.641,273.878 92.557 C 259.319 98.551,259.319 118.592,273.878 124.586 L 276.122 125.510 320.000 125.510 L 363.878 125.510 366.122 124.586 C 370.725 122.691,374.119 119.297,376.015 114.694 L 376.939 112.449 376.939 68.571 L 376.939 24.694 376.015 22.449 C 370.021 7.891,349.976 7.891,343.986 22.449 C 343.083 24.644,343.060 25.085,342.940 42.374 L 342.817 60.053 338.317 55.843 C 296.694 16.897,242.218 -3.430,189.388 0.271 M378.377 183.485 C 374.038 184.702,370.019 187.997,367.880 192.093 C 367.250 193.298,366.459 194.285,366.122 194.286 C 365.598 194.287,365.505 195.564,365.472 203.164 C 365.035 303.722,270.397 381.359,170.612 363.018 C 136.905 356.823,107.356 341.048,82.462 315.961 L 75.333 308.776 99.605 308.571 C 123.659 308.369,123.898 308.359,126.122 307.443 C 140.681 301.449,140.681 281.408,126.122 275.414 L 123.878 274.490 80.000 274.490 L 36.122 274.490 33.878 275.414 C 29.275 277.309,25.881 280.703,23.985 285.306 L 23.061 287.551 23.061 331.429 L 23.061 375.306 23.985 377.551 C 26.855 384.521,32.501 388.316,40.000 388.316 C 47.499 388.316,53.146 384.520,56.014 377.551 C 56.918 375.354,56.941 374.925,57.060 357.434 L 57.183 339.562 62.775 344.787 C 187.273 461.106,388.652 381.715,399.612 211.993 C 400.153 203.615,400.025 194.816,399.356 194.373 C 399.113 194.213,398.389 193.105,397.745 191.910 C 394.077 185.107,385.655 181.444,378.377 183.485 " stroke="none" fill-rule="evenodd"></path></g></svg>
+            </span>
+            <span id="goto-button" data-toggle="tooltip" data-placement="top" title="open tab">
+              <svg id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="15" viewBox="0, 0, 400,400"><g id="svgg"><path id="path0" d="M273.299 31.836 C 288.047 31.955,311.954 31.955,326.424 31.836 C 340.895 31.717,328.828 31.619,299.609 31.619 C 270.391 31.619,258.551 31.717,273.299 31.836 M245.459 32.904 C 245.890 33.170,245.321 33.618,244.195 33.901 C 235.908 35.981,230.488 48.432,234.297 56.641 C 238.979 66.733,240.860 67.188,277.903 67.188 L 308.981 67.188 234.766 141.406 C 193.947 182.227,160.198 215.624,159.767 215.624 C 159.337 215.623,192.211 182.401,232.821 141.796 L 306.658 67.969 276.571 68.150 L 246.484 68.331 275.588 68.736 L 304.692 69.141 220.622 153.125 C 142.604 231.063,132.031 242.055,132.031 245.228 C 132.031 245.873,132.901 244.662,133.964 242.536 C 135.274 239.916,139.732 234.899,147.809 226.953 L 159.722 215.234 147.836 227.440 C 135.159 240.457,132.847 243.938,132.847 250.000 C 132.847 253.510,135.006 259.488,136.637 260.497 C 137.112 260.790,137.489 261.448,137.475 261.960 C 137.440 263.280,135.249 260.329,133.526 256.641 C 132.723 254.922,132.058 254.062,132.048 254.730 C 131.994 258.583,141.417 268.006,145.270 267.952 C 145.938 267.942,145.078 267.277,143.359 266.474 C 139.671 264.751,136.720 262.560,138.040 262.525 C 138.552 262.511,139.210 262.888,139.503 263.363 C 140.512 264.994,146.490 267.153,150.000 267.153 C 156.756 267.153,159.174 265.303,182.405 242.354 L 204.297 220.729 182.813 242.415 C 167.137 258.237,160.283 264.623,157.464 266.035 C 155.338 267.098,154.127 267.969,154.772 267.969 C 157.945 267.969,168.937 257.396,246.875 179.378 L 330.859 95.308 331.264 124.412 L 331.669 153.516 331.850 123.428 L 332.031 93.339 267.970 157.412 C 232.736 192.652,203.908 221.132,203.908 220.701 C 203.907 220.271,232.910 190.916,268.359 155.469 L 332.813 91.019 332.830 122.267 C 332.849 157.116,332.833 157.001,338.381 162.265 C 347.520 170.936,362.906 166.909,366.403 154.931 C 367.441 151.375,367.190 45.852,366.137 43.359 C 365.596 42.077,365.642 42.007,366.392 42.969 C 367.205 44.010,367.271 44.010,366.987 42.969 C 366.811 42.324,366.198 41.797,365.625 41.797 C 365.052 41.797,364.421 41.308,364.222 40.712 C 363.975 39.973,364.204 39.822,364.938 40.240 C 365.531 40.578,364.626 39.397,362.927 37.615 C 359.849 34.386,358.793 33.582,359.828 35.258 C 360.159 35.793,359.947 35.998,359.288 35.778 C 358.692 35.579,358.203 34.948,358.203 34.375 C 358.203 33.802,357.676 33.189,357.031 33.013 C 355.990 32.729,355.990 32.795,357.031 33.608 C 357.993 34.358,357.923 34.404,356.641 33.863 C 355.781 33.500,340.840 33.115,323.438 33.007 C 306.035 32.899,281.195 32.723,268.237 32.616 C 255.279 32.509,245.029 32.639,245.459 32.904 M239.800 34.784 C 237.010 36.828,232.813 41.898,232.813 43.225 C 232.813 43.643,233.822 42.481,235.057 40.643 C 236.291 38.805,238.805 36.291,240.643 35.057 C 242.481 33.822,243.649 32.813,243.238 32.813 C 242.827 32.813,241.280 33.699,239.800 34.784 M231.463 50.000 C 231.463 51.934,231.615 52.725,231.801 51.758 C 231.988 50.791,231.988 49.209,231.801 48.242 C 231.615 47.275,231.463 48.066,231.463 50.000 M368.338 100.391 C 368.338 129.609,368.435 141.449,368.554 126.701 C 368.673 111.953,368.673 88.046,368.554 73.576 C 368.435 59.105,368.338 71.172,368.338 100.391 M232.813 56.762 C 232.813 58.968,241.022 67.188,243.225 67.188 C 243.643 67.188,242.481 66.178,240.643 64.943 C 238.805 63.709,236.291 61.195,235.057 59.357 C 233.822 57.519,232.813 56.351,232.813 56.762 M109.961 81.836 C 127.686 81.953,156.689 81.953,174.414 81.836 C 192.139 81.719,177.637 81.623,142.188 81.623 C 106.738 81.623,92.236 81.719,109.961 81.836 M65.765 84.491 C 63.479 85.369,61.734 86.213,61.887 86.366 C 62.039 86.519,64.437 85.800,67.215 84.769 C 69.993 83.738,71.738 82.894,71.094 82.894 C 70.449 82.894,68.051 83.613,65.765 84.491 M72.656 84.017 C 54.151 88.028,37.874 104.456,33.984 123.047 C 32.273 131.223,32.273 318.777,33.984 326.953 C 37.915 345.740,54.260 362.085,73.047 366.016 C 81.223 367.727,268.777 367.727,276.953 366.016 C 295.740 362.085,312.085 345.740,316.016 326.953 C 317.678 319.012,317.685 195.729,316.024 191.067 C 315.422 189.377,315.071 187.764,315.245 187.483 C 315.418 187.202,314.117 185.597,312.353 183.916 C 310.589 182.235,309.422 181.344,309.760 181.937 C 310.180 182.676,310.032 182.891,309.288 182.621 C 308.692 182.404,308.261 181.919,308.332 181.543 C 308.475 180.778,305.273 180.300,300.000 180.300 C 294.727 180.300,291.525 180.778,291.668 181.543 C 291.739 181.919,291.308 182.404,290.712 182.621 C 289.968 182.891,289.820 182.676,290.240 181.937 C 290.578 181.344,289.411 182.235,287.647 183.916 C 285.883 185.597,284.582 187.202,284.755 187.483 C 284.929 187.764,284.578 189.377,283.976 191.067 C 283.073 193.603,282.875 205.156,282.847 257.137 L 282.813 320.134 280.637 324.298 C 278.876 327.669,277.669 328.876,274.298 330.637 L 270.134 332.813 175.000 332.813 L 79.866 332.813 75.702 330.637 C 72.331 328.876,71.124 327.669,69.363 324.298 L 67.188 320.134 67.188 225.000 L 67.188 129.866 69.363 125.702 C 71.124 122.331,72.331 121.124,75.702 119.363 L 79.866 117.188 142.863 117.153 C 194.844 117.125,206.397 116.927,208.933 116.024 C 210.623 115.422,212.236 115.071,212.517 115.245 C 212.798 115.418,214.403 114.117,216.084 112.353 C 217.765 110.589,218.656 109.422,218.063 109.760 C 217.324 110.180,217.109 110.032,217.379 109.288 C 217.596 108.692,218.081 108.261,218.457 108.332 C 219.222 108.475,219.700 105.273,219.700 100.000 C 219.700 94.727,219.222 91.525,218.457 91.668 C 218.081 91.739,217.596 91.308,217.379 90.712 C 217.109 89.968,217.324 89.820,218.063 90.240 C 218.656 90.578,217.765 89.411,216.084 87.647 C 214.403 85.883,212.736 84.620,212.379 84.840 C 212.023 85.061,211.113 84.844,210.358 84.358 C 209.061 83.525,209.063 83.500,210.392 83.916 C 211.168 84.159,211.597 84.029,211.348 83.626 C 210.548 82.331,78.721 82.703,72.656 84.017 M215.284 87.695 L 217.578 90.234 215.039 87.940 C 212.672 85.801,212.141 85.156,212.744 85.156 C 212.879 85.156,214.021 86.299,215.284 87.695 M50.781 93.278 C 48.418 95.160,45.283 98.234,43.814 100.108 C 40.346 104.534,39.578 105.929,42.563 102.379 C 45.791 98.540,49.060 95.331,52.734 92.394 C 54.453 91.020,55.684 89.887,55.469 89.876 C 55.254 89.865,53.145 91.396,50.781 93.278 M221.275 100.000 C 221.275 101.504,221.436 102.119,221.632 101.367 C 221.829 100.615,221.829 99.385,221.632 98.633 C 221.436 97.881,221.275 98.496,221.275 100.000 M217.188 110.401 C 217.188 110.535,216.045 111.678,214.648 112.940 L 212.109 115.234 214.404 112.695 C 216.543 110.329,217.188 109.797,217.188 110.401 M34.451 115.991 C 33.550 118.400,32.831 120.797,32.853 121.318 C 32.876 121.839,33.738 119.993,34.769 117.215 C 35.800 114.437,36.519 112.040,36.367 111.888 C 36.215 111.735,35.353 113.582,34.451 115.991 M111.972 118.554 C 129.514 118.672,157.991 118.672,175.254 118.554 C 192.516 118.437,178.164 118.341,143.359 118.341 C 108.555 118.341,94.431 118.437,111.972 118.554 M74.939 120.526 C 72.258 122.333,68.724 126.872,68.781 128.436 C 68.798 128.909,69.370 128.242,70.051 126.953 C 71.836 123.574,73.460 121.907,76.562 120.266 C 78.066 119.470,78.909 118.804,78.436 118.785 C 77.962 118.766,76.389 119.549,74.939 120.526 M31.629 225.000 C 31.629 278.496,31.722 300.381,31.836 273.633 C 31.950 246.885,31.950 203.115,31.836 176.367 C 31.722 149.619,31.629 171.504,31.629 225.000 M68.347 225.000 C 68.347 277.207,68.440 298.564,68.555 272.461 C 68.669 246.357,68.669 203.643,68.555 177.539 C 68.440 151.436,68.347 172.793,68.347 225.000 M332.813 156.762 C 332.813 158.968,341.022 167.188,343.225 167.188 C 343.643 167.188,342.481 166.178,340.643 164.943 C 338.805 163.709,336.291 161.195,335.057 159.357 C 333.822 157.519,332.813 156.351,332.813 156.762 M364.194 160.350 C 362.762 162.486,361.912 164.035,362.306 163.792 C 363.327 163.160,367.481 157.056,367.108 156.734 C 366.937 156.587,365.625 158.214,364.194 160.350 M358.203 165.678 C 356.914 166.504,356.260 167.181,356.749 167.183 C 357.239 167.186,358.469 166.496,359.484 165.651 C 361.806 163.716,361.248 163.728,358.203 165.678 M348.242 168.520 C 349.209 168.706,350.791 168.706,351.758 168.520 C 352.725 168.334,351.934 168.182,350.000 168.182 C 348.066 168.182,347.275 168.334,348.242 168.520 M298.633 178.664 C 299.385 178.860,300.615 178.860,301.367 178.664 C 302.119 178.467,301.504 178.306,300.000 178.306 C 298.496 178.306,297.881 178.467,298.633 178.664 M289.844 183.057 C 289.844 183.191,288.701 184.334,287.305 185.596 L 284.766 187.891 287.060 185.352 C 289.199 182.985,289.844 182.453,289.844 183.057 M312.940 185.352 L 315.234 187.891 312.695 185.596 C 310.329 183.457,309.797 182.813,310.401 182.813 C 310.535 182.813,311.678 183.955,312.940 185.352 M281.622 256.641 C 281.622 291.445,281.718 305.798,281.836 288.535 C 281.953 271.272,281.953 242.795,281.836 225.254 C 281.719 207.712,281.623 221.836,281.622 256.641 M318.342 257.813 C 318.342 293.262,318.437 307.764,318.554 290.039 C 318.672 272.314,318.672 243.311,318.554 225.586 C 318.437 207.861,318.342 222.363,318.342 257.813 M131.463 250.000 C 131.463 251.934,131.615 252.725,131.801 251.758 C 131.988 250.791,131.988 249.209,131.801 248.242 C 131.615 247.275,131.463 248.066,131.463 250.000 M148.242 268.520 C 149.209 268.706,150.791 268.706,151.758 268.520 C 152.725 268.334,151.934 268.182,150.000 268.182 C 148.066 268.182,147.275 268.334,148.242 268.520 M68.785 321.564 C 68.683 324.105,75.887 331.311,78.436 331.219 C 78.909 331.202,78.242 330.630,76.953 329.949 C 73.574 328.164,71.907 326.540,70.266 323.438 C 69.470 321.934,68.804 321.091,68.785 321.564 M279.730 323.335 C 278.639 325.969,276.404 328.182,273.047 329.952 C 271.758 330.631,270.990 331.202,271.340 331.219 C 274.313 331.365,282.592 322.957,281.022 321.387 C 280.833 321.198,280.252 322.075,279.730 323.335 M32.853 328.682 C 32.801 329.896,35.999 338.480,36.367 338.112 C 36.519 337.960,35.800 335.563,34.769 332.785 C 33.738 330.007,32.876 328.161,32.853 328.682 M315.091 332.994 C 314.152 335.672,313.503 337.982,313.647 338.126 C 314.044 338.523,317.280 329.575,317.021 328.798 C 316.898 328.427,316.029 330.315,315.091 332.994 M127.539 331.836 C 153.643 331.950,196.357 331.950,222.461 331.836 C 248.564 331.722,227.207 331.628,175.000 331.628 C 122.793 331.628,101.436 331.722,127.539 331.836 M41.517 346.875 C 43.836 350.384,49.616 356.164,53.125 358.483 C 55.607 360.124,55.572 360.052,52.734 357.699 C 48.772 354.413,45.587 351.228,42.301 347.266 C 39.948 344.428,39.876 344.393,41.517 346.875 M306.291 348.774 C 304.491 351.108,301.108 354.491,298.774 356.291 C 294.155 359.855,292.978 361.360,297.070 358.469 C 301.512 355.332,311.465 344.531,309.914 344.531 C 309.722 344.531,308.092 346.441,306.291 348.774 M64.606 364.845 C 66.409 365.716,69.045 366.611,70.465 366.835 C 72.116 367.095,71.497 366.704,68.750 365.751 C 61.683 363.299,61.177 363.188,64.606 364.845 M282.422 365.346 C 279.844 366.382,278.789 367.017,280.078 366.758 C 282.506 366.269,289.271 363.394,287.891 363.437 C 287.461 363.451,285.000 364.310,282.422 365.346 M126.367 368.555 C 153.115 368.669,196.885 368.669,223.633 368.555 C 250.381 368.441,228.496 368.347,175.000 368.347 C 121.504 368.347,99.619 368.441,126.367 368.555 " stroke="none" fill-rule="evenodd"></path></g></svg>
+            </span>
+        </div>
       </div>
       <div id="error-page">
         <span>Oops! Something went wrong. Please contact dev.</span>
@@ -137,7 +165,6 @@
           <div class="container-fluid">
             <a class="navbar-brand">Files to Include</a>
             <form class="d-flex">
-              <button class="btn btn-outline-success" type="submit" id="find-button">Find</button>
               <button class="btn btn-outline-success" type="submit" id="find-and-replace-button">Find And Replace</button>
             </form>
           </div>
@@ -162,24 +189,6 @@
           <div class="input-group input-group-sm mb3">
             <span class="input-group-text">Replace</span>
             <textarea class="form-control" aria-label="Replace" id="find-and-replace-replacement"></textarea>
-          </div>
-        </div>
-      </div>
-      <div id="find-page" class="pop">
-        <nav class="navbar navbar-light bg-light">
-          <div class="container-fluid">
-            <form class="d-flex">
-              <button class="btn btn-outline-success" type="submit" id="find-back-button">Back</button>
-            </form>
-            <form class="d-flex">
-              <button class="btn btn-outline-success" type="submit" id="find-submit-button">submit</button>
-            </form>
-          </div>
-        </nav>
-        <div id="find-inputs">
-          <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text">Find</span>
-            <textarea class="form-control" aria-label="Find" id="find-search-pattern"></textarea>
           </div>
         </div>
       </div>
@@ -343,22 +352,11 @@
       }
 
       // Find and replace submit action
-      function onFindAndReplaceSubmitAction() {
-          var findAndReplaceClone = document.getElementById('find-and-replace-clone');
-
-          // search pattern value
-          var searchPatternElement = findAndReplaceClone.querySelector('#find-and-replace-search-pattern');
-          var searchPattern = searchPatternElement.value;
-
-          // replacement value
-          var replacementElement = findAndReplaceClone.querySelector('#find-and-replace-replacement');
-          var replacement = replacementElement.value;
-
+      function onReplaceAllAction(searchPattern, replacement) {
           loader.toggle('Sumitting...');
           
           // remove other pages
-          removeFindPage();
-          removeFindAndReplacePage();
+          removeAllPages();
 
           // call file list
           google.script.run
@@ -373,30 +371,63 @@
               .replaceText(fileManager.getFiles(), searchPattern, replacement);
       }
 
+      // Single replace click
+      function onSingleReplaceClick(index, searchPattern, replacement, parentId, fileId) {
+          var element = document.getElementById(parentId);
+          element.classList.add('disabled');
+          google.script.run
+              .withSuccessHandler(function (files) {
+                  
+              })
+              .withFailureHandler(function (msg) {
+                  // Show error here
+                  element.classList.remove('disabled');
+                  showErrorPage();
+              })
+              .singleReplace(fileId, index, searchPattern, replacement);
+      }
+
       // Makes find result element
-      function makeFindResultElement(strResult, count, name, url) {
+      function makeFindResultElement(result, count, name, url, searchPattern, replacement, fileId) {
           var findResultElement = document.getElementById('find-result');
           var findResultElementClone = findResultElement.cloneNode(true);
-          findResultElementClone.setAttribute('id', 'find-result-'+ count);
+          var id = 'find-result-'+count;
+          findResultElementClone.setAttribute('id', id);
 
           findResultElementClone.querySelector('#name').innerText = name;
-          findResultElementClone.querySelector('.preview').innerText = strResult;
+          findResultElementClone.querySelector('.preview').innerText = result.text;
 
-          findResultElementClone.addEventListener('click', function() {
+          // Goto button
+          var gotoButton = findResultElementClone.querySelector('#goto-button');
+          gotoButton.addEventListener('click', function() {
               window.open(url);
+          });
+
+          // replace button 
+          var replaceButton = findResultElementClone.querySelector("#replace-find-button");
+          replaceButton.addEventListener('click', function(e) {
+            onSingleReplaceClick(result.index, searchPattern, replacement, id, fileId);
           });
           return findResultElementClone;
       }
 
+      function initReplaceAll(searchPattern, replacement) {
+          var fileResultsClone = document.getElementById('file-results-clone');
+          var replaceAllButton = fileResultsClone.querySelector('#replace-all-button');
+          replaceAllButton.addEventListener('click', function() {
+            onReplaceAllAction(searchPattern, replacement);
+          });
+      }
+
       // Shows find results
-      function showFindResults(findResults) {
+      function showFindResults(findResults, searchPattern, replacement) {
           var keys = Object.keys(findResults);
           var count = 1;
           var elements = []
           for (var i = 0; i < keys.length; i++) {
               var results = findResults[keys[i]].results;
               for (var j = 0; j < results.length; j++) {
-                  var findResultElement = makeFindResultElement(results[j], count, findResults[keys[i]].name, findResults[keys[i]].url);
+                  var findResultElement = makeFindResultElement(results[j], count, findResults[keys[i]].name, findResults[keys[i]].url, searchPattern, replacement, keys[i]);
                   count+=1
                   elements.push(findResultElement);
               }
@@ -409,38 +440,108 @@
               return a_value.localeCompare(b_value);
           });
 
+          var fileResults = document.getElementById('file-results');
+          var fileResultsClone = fileResults.cloneNode(true);
+          fileResultsClone.setAttribute('id', 'file-results-clone');
+
           for (var i = 0; i < elements.length; i++) {
-              document.body.appendChild(elements[i]);
+              fileResultsClone.appendChild(elements[i]);
           }
+
+          document.body.appendChild(fileResultsClone);
           
           // Remove loading
           var loadingViewClone = document.getElementById('loading-view-clone');
           document.body.removeChild(loadingViewClone);
 
+          initReplaceAll(searchPattern, replacement);
+      }
+
+      function removeAllPages() {
+        var mainPage = document.getElementById('main-page-clone');
+        if (mainPage) {
+          document.body.removeChild(mainPage);
+        }
+
+        var loadingView = document.getElementById('loading-view-clone');
+        if (loadingView) {
+          document.body.removeChild(loadingView);
+        }
+
+        var errorPage = document.getElementById('error-page-clone');
+        if (errorPage) {
+          document.body.removeChild(errorPage);
+        }
+
+        var fileSelect = document.getElementById('file-select-clone');
+        if (fileSelect) {
+          document.body.removeChild(fileSelect);
+        }
+
+        var findAndReplace = document.getElementById('find-and-replace-clone');
+        if (findAndReplace) {
+          document.body.removeChild(findAndReplace);
+        }
+
+        var emptySearch = document.getElementById('empty-search-clone');
+        if (emptySearch) {
+          document.body.removeChild(emptySearch);
+        }
+
+        var fileResults = document.getElementById('file-results-clone');
+        if (fileResults) {
+          document.body.removeChild(fileResults);
+        }
+      }
+
+      function emptyResults() {
+        removeAllPages();
+        var errorPage = document.getElementById('empty-search');
+        var errorPageClone = errorPage.cloneNode(true);
+        errorPageClone.setAttribute('id', 'empty-search-clone');
+        document.body.appendChild(errorPageClone);
       }
 
       // Find submit action
       function onFindSubmitActionClick() {
-          var findAndReplaceClone = document.getElementById('find-page-clone');
+          var findAndReplaceClone = document.getElementById('find-and-replace-clone');
 
           // search pattern value
-          var searchPatternElement = findAndReplaceClone.querySelector('#find-search-pattern');
-          console.log(searchPatternElement)
+          var searchPatternElement = findAndReplaceClone.querySelector('#find-and-replace-search-pattern');
           var searchPattern = searchPatternElement.value;
+
+
+          // search pattern value
+          var replacementElement = findAndReplaceClone.querySelector('#find-and-replace-replacement');
+          var replacement = replacementElement.value;
+
           loader.toggle('Sumitting...');
           
           // remove other pages
-          removeFindPage();
+          // removeFindPage();
           removeFindAndReplacePage();
 
           // call file list
           google.script.run
               .withSuccessHandler(function (findResults) {
+                  var all_empty = true;
+                  var keys = Object.keys(findResults);
+                  for (var i = 0; i < keys.length; i++) {
+                    if (findResults[keys[i]].results.length > 0) {
+                      all_empty = false;
+                      break;
+                    }
+                  }
+                  if (all_empty) {
+                    emptyResults();
+                  } else {
+                    showFindResults(findResults, searchPattern, replacement);
+                  }
                   // Show finish page
-                  showFindResults(findResults);
               })
               .withFailureHandler(function (msg) {
                   // Show error here
+                  console.log('error', msg);
                   showErrorPage();
               })
               .findAll(fileManager.getFiles(), searchPattern);
@@ -459,9 +560,7 @@
 
       // The finish page
       function showFinishPage() {
-          var loadingViewClone = document.getElementById('loading-view-clone');
-          document.body.removeChild(loadingViewClone);
-
+          removeAllPages();
           var finishPage = document.getElementById('finish-page');
           var finishPageClone = finishPage.cloneNode(true);
           document.body.appendChild(finishPageClone);
@@ -473,13 +572,10 @@
       function initMainPageActions() {
           
           var mainPageClone = document.getElementById('main-page-clone');
-          
-          // Find Button
-          var findButton = mainPageClone.querySelector('#find-button');
-          findButton.addEventListener('click', onFindButtonAction);
 
           // Find and Replace Button
           var findAndReplaceButton = mainPageClone.querySelector('#find-and-replace-button');
+
           findAndReplaceButton.addEventListener('click', onFindAndReplaceAction);
       }
 
@@ -490,25 +586,6 @@
 
           // initialize actions
           initMainPageActions();
-      }
-
-      // Initialize find page
-      function initFindPage() {
-
-          // Make clone
-          var findPage = document.getElementById('find-page');
-          var findPageClone = findPage.cloneNode(true);
-          findPageClone.setAttribute('id', 'find-page-clone');
-
-          // Add back button
-          var backButton = findPageClone.querySelector('#find-back-button');
-          backButton.addEventListener('click', onBackActionClick);
-
-          // Add submit button
-          var submitButton = findPageClone.querySelector('#find-submit-button');
-          submitButton.addEventListener('click', onFindSubmitActionClick);
-
-          document.body.appendChild(findPageClone);
       }
 
       // Initialize find and replace page
@@ -524,7 +601,7 @@
 
           // Submit button
           var findAndReplaceSubmitButton = findAndReplaceClone.querySelector('#find-and-replace-submit-button');
-          findAndReplaceSubmitButton.addEventListener('click', onFindAndReplaceSubmitAction);
+          findAndReplaceSubmitButton.addEventListener('click', onFindSubmitActionClick);
 
           document.body.appendChild(findAndReplaceClone);
       }
@@ -546,9 +623,6 @@
 
                   // actions
                   initMainPage(files);
-
-                  // initialize find page
-                  initFindPage();
 
                   // initialize find and replace page
                   initFindAndReplacePage();

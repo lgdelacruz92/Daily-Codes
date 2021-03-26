@@ -19,11 +19,27 @@ function findAll(files, searchPattern) {
         var nextRange = document.getBody().findText(searchPattern);
         while (nextRange !== null) {
           var elementText = nextRange.getElement().asText().getText();
-          result[files[i]]['results'].push(elementText);
+          if (elementText.length > 100) {
+            elementText = elementText.substring(0, 101);
+          }
+          var containerElement = nextRange.getElement().getParent();
+          var index = document.getBody().getChildIndex(containerElement);
+          result[files[i]]['results'].push({ text: elementText, index: index } );
           nextRange = document.getBody().findText(searchPattern, nextRange);
         }
     }
     return result;
+}
+
+// Single replace
+function singleReplace(file, index, searchPattern, replacement) {
+    
+    var document = DocumentApp.openById(file);
+    var body = document.getBody();
+
+    var element = body.getChild(index);
+    element.asParagraph().replaceText(searchPattern, replacement);
+    return { success: 'success'}
 }
 
 /*
